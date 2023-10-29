@@ -1,0 +1,24 @@
+ion-input.custom {
+  --background: white;
+  --color: gray;
+  --placeholder-color: gray;
+  --placeholder-opacity: 0.8;
+
+  --padding-bottom: 3px;
+  --padding-end: 8px;
+  --padding-start: 8px;
+  --padding-top: 3px;
+
+  border: 1px #ddd solid;
+  border-radius: 5px;
+}
+
+element.style {
+}
+
+.text-area {
+  border: none;
+  width: 100%;
+  outline: none;
+  box-shadow: none;
+}

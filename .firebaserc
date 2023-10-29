@@ -1,0 +1,14 @@
+{
+  "targets": {
+    "report-il": {
+      "hosting": {
+        "app": [
+          "report-il"
+        ]
+      }
+    }
+  },
+  "projects": {
+    "default": "report-il"
+  }
+}

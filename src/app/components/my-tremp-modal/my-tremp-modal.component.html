@@ -1,0 +1,138 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button (click)="cancel()">בטל</ion-button>
+    </ion-buttons>
+    <ion-buttons slot="end">
+      <ion-button (click)="confirm()" [strong]="true">אשר</ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding flex flex-col  text-[#666666]">
+  <form class="mt-2"
+        [formGroup]="dynamicForm"
+        #theNgForm="ngForm">
+    <div class="flex flex-col ">
+
+      <!--  שם מלא -->
+      <div class="flex flex-col px-[10px] mb-[15px]">
+        <div class="text-[14px] mx-[10px] font-bold mb-[5px]">שם מלא (חובה)</div>
+        <input id="fullName"
+               class="rounded-[4px] border-[1px]  border-[#666666] px-[20px] py-[5px] text-[16px]"
+               [formControlName]="'fullName'">
+      </div>
+
+      <!-- סוג הנסיעה-->
+      <div class="flex flex-col px-[10px] mb-[15px]">
+        <div class="text-[14px] mx-[10px] font-bold mb-[5px]">סוג הפניה</div>
+        <ion-segment formControlName="isDriver" class=" nt-[15px] ">
+          <ion-segment-button value="טרמפיסט">
+            <ion-label>חיפוש טרמפ</ion-label>
+          </ion-segment-button>
+          <ion-segment-button value="נהג">
+            <ion-label>התנדבות להסעה</ion-label>
+          </ion-segment-button>
+        </ion-segment>
+    </div>
+
+      <!--  מוצא -->
+      <div class="mt-[15px] bg-blue-100 p-[10px]">
+        <div class="flex flex-col mb-[10px] ">
+          <div class="text-[14px] mx-[10px] font-bold mb-[5px]">אזור יציאה (חובה)</div>
+          <div class="bg-white rounded-[4px] border-[1px] border-[#666666] px-[20px] py-[5px]">
+            <mat-select  [formControlName]="'rideFrom'">
+              <mat-option class="text-[16px] " *ngFor="let zone of zoneList"
+                          [value]="zone.value">
+                {{zone.viewValue}}
+              </mat-option>
+            </mat-select>
+          </div>
+        </div>
+
+
+        <div class="flex flex-col">
+          <div class="text-[14px] mx-[10px] font-bold mb-[5px]">פרוט (עיר / מיקום)</div>
+          <input id="rideFromRemark"
+                 class="rounded-[4px] border-[1px]  border-[#666666] px-[20px] py-[5px]  text-[16px]"
+                 [formControlName]="'rideFromRemark'">
+        </div>
+      </div>
+      <!--  יעד  -->
+      <div class="mt-[10px] bg-green-100 p-[10px]">
+        <div class="flex flex-col mb-[10px]  ">
+          <div class="text-[14px] mx-[10px] font-bold mb-[5px]">אזור יעד (חובה)</div>
+          <div class="bg-white rounded-[4px] border-[1px] border-[#666666] px-[20px] py-[5px]">
+            <mat-select [formControlName]="'rideTo'">
+              <mat-option class="text-[16px] text-[rgb(20,20,20)] " *ngFor="let zone of zoneList"
+                          [value]="zone.value">
+                {{zone.viewValue}}
+              </mat-option>
+            </mat-select>
+          </div>
+        </div>
+
+
+        <div class="flex flex-col">
+          <div class="text-[14px] mx-[10px] font-bold mb-[5px]">פרוט (עיר / מיקום)</div>
+          <input id="rideToRemark"
+                 class="rounded-[4px] border-[1px]  border-[#666666] px-[20px] py-[5px]  text-[16px] "
+                 [formControlName]="'rideToRemark'">
+        </div>
+      </div>
+
+      <!--  תאריך -->
+      <div class="flex flex-col px-[10px] mt-[10px] ">
+        <div class="text-[14px] mx-[10px] font-bold mb-[5px]">תאריך (חובה)</div>
+
+        <div class="rounded-[4px] border-[1px]  border-[#666666] px-[20px] py-[5px]  ">
+          <input matInput [matDatepicker]="picker"
+                 class="bg-transparent pr-[10px] outline-none text-[16px]"
+                 (click)="picker.open()"
+                 formControlName="pickupStartTime"
+          >
+          <mat-datepicker #picker class="mt-2"></mat-datepicker>
+        </div>
+      </div>
+
+      <!--  שעה -->
+      <div class="flex w-full">
+        <div class="flex flex-col px-[10px] mt-[10px] w-[50%]">
+          <div class="text-[14px] mx-[10px] font-bold mb-[5px]">משעה (חובה)</div>
+          <div class="bg-white rounded-[4px] border-[1px] border-[#666666] px-[20px] py-[5px] ">
+            <mat-select [formControlName]="'hourFrom'" (selectionChange)="fromHourSelected($event)">
+              <mat-option class="text-[16px] text-[rgb(20,20,20)] " *ngFor="let hour of hourList"
+                          [value]="hour.value">
+                {{hour.viewValue}}
+              </mat-option>
+            </mat-select>
+          </div>
+        </div>
+
+        <div class="flex flex-col px-[10px] mt-[10px]  w-[50%]">
+          <div class="text-[14px] mx-[10px] font-bold mb-[5px]">עד שעה (חובה)</div>
+          <div class="bg-white rounded-[4px] border-[1px] border-[#666666] px-[20px] py-[5px] ]">
+            <mat-select [formControlName]="'hourTo'" (selectionChange)="toHourSelected($event)">
+              <mat-option class="text-[16px] text-[rgb(20,20,20)] " *ngFor="let hour of hourList"
+                          [value]="hour.value">
+                {{hour.viewValue}}
+              </mat-option>
+            </mat-select>
+          </div>
+        </div>
+
+      </div>
+
+      <!--   הערות  -->
+      <div class="flex flex-col px-[10px] mt-[10px]">
+        <div class="text-[14px] mx-[10px] font-bold mb-[5px]">הערות</div>
+        <ion-item class="text-area-wrapper border-[#666] rounded-[4px] border-[1px]  mb-[20px] " lines="none">
+                <textarea formControlName="remarks"
+                          class="w-[83vw] text-area text-start text-[20px]  w-[full]  textarea z-0 border-[#666666] text-[#666]"
+                          placeholder="הערות" maxlength="200" rows="5">
+            </textarea>
+        </ion-item>
+      </div>
+    </div>
+  </form>
+</ion-content>

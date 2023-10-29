@@ -1,0 +1,31 @@
+<ion-content [fullscreen]="true">
+  <div id="recaptcha-container" class="text-primary"></div>
+  <div class="bg-red-500 h-[50px] text-center leading-[50px] w-[100vw] text-white text-[24px]">מערכת טרמפים</div>
+  <div class="p-[20px] mt-[50px]">
+    <div *ngIf="confirmationResult == null">
+      <div class="flex flex-col w-[100%] text-center">
+        <div class="text-center">נא להזין מספר טלפון נייד אליו יישלח קוד אימות</div>
+        <div class="text-center">מספר זה ישמש גם לצורך תאום חבירה ולתקשורת ווטסאפ</div>
+        <input type="tel" class="text-center"
+               placeholder="מספר טלפון נייד"
+               [(ngModel)]="phoneNumber"
+               [ngClass]="{'text-red-500': !isPhoneLegal(phoneNumber),'text-green-500': isPhoneLegal(phoneNumber)}">
+        <button (click)="authPhone('+972' + phoneNumber)" [disabled]="!isPhoneLegal(phoneNumber)"
+                [ngClass]="{'bg-gray-400': !isPhoneLegal(phoneNumber)}">לחצ.י לקבלת קוד אימות
+        </button>
+      </div>
+    </div>
+    <div *ngIf="confirmationResult !== null">
+      <div class="flex flex-col w-full text-center">
+        <div class="">הכנס.י את קוד האימות</div>
+        <input #verificationCode
+               type="tel" class="text-center"
+               placeholder="קוד אימות"
+        >
+
+        <button class="w-full" (click)="sendVerificationCode(verificationCode.value)">שליחת קוד אימות</button>
+      </div>
+    </div>
+
+  </div>
+</ion-content>
